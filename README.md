@@ -6,7 +6,7 @@ What Is It?
 
 This is a simple JavaScript class that creates a tree-like table of contents whose nodes can be collapsed and expanded. The part of the HTML document that does not belong to the selected node becomes invisible. The easiest way to illustrate this is with a picture.
 
-![A document without the table of contents](images/no_toc.jpg.png) ![The same document with the table of contents](images/toc.jpg.jpg)
+![A document without the table of contents](images/no_toc.jpg) ![The same document with the table of contents](images/toc.jpg)
 
 > [!NOTE]
 > The source code is provided as is, since I mainly did this project for myself, but I will be glad if someone finds it useful. Also, I physically could not test the script on a large number of browsers and especially mobile devices. Thus, I won’t mind if someone finds errors or wants to help the project in a different way.
