@@ -59,7 +59,9 @@ Known Issues / To Do
 
 The `TreeOfContents.#createTreeLink()` private method contains direct assignment to a link's `innerHTML` property. It seems problematic because the inner HTML of the heading element `<h…>` might contain someting inappropriate for the link `<a>`. I tried `createTextNode()`, but it doesn't works correctly if the `<h…>` contains style tags (`<sub>`, `<strong>`, etc.). I also tried the `Range` object, but this idea is even worse. If anyone has any ideas, please tell me.
 
-Another issue is related to the browser's built-in text search function on the current page (with hidden text): depending on the specific browser, it either doesn't not work at all or works incorrectly.
+Another issue is related to the browser's built-in text search function on the current page (with hidden text): depending on the specific browser, it either doesn't not work at all or works incorrectly. It might make sense to implement own search function on hidden elements.
+
+And one more idea for the (possible) future: add the ability to display the entire contents of a document at once, that is, temporarily or permanently disable hiding of all sections except the current one. It's not very difficult to implement.
 
 A Little Bonus
 --------------
