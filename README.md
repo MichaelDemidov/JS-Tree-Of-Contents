@@ -4,7 +4,9 @@ Tree of Contents (HTML + JavaScript + CSS)
 What Is It?
 -----------
 
-This is a simple JavaScript class that creates a tree-like table of contents whose nodes can be collapsed and expanded. The part of the HTML document that does not belong to the selected node becomes invisible. The easiest way to illustrate this is with two pictures: without the script and with it (or before and after).
+This is a simple JavaScript class that converts a “flat” HTML document into a tree-like form: it creates a table of contents as a tree whose nodes can be collapsed and expanded, and makes invisible the part of the document that is not referenced by the selected node. This behavior is similar to Windows help files with tree-like table of contents (`*.hlp` and `*.chm`), interactive books and so on.
+
+The easiest way to illustrate this is with two pictures: without the script and with it (or before and after).
 
 **A document without the table of contents:**
 
@@ -56,6 +58,8 @@ Known Issues / To Do
 --------------------
 
 The `TreeOfContents.#createTreeLink()` private method contains direct assignment to a link's `innerHTML` property. It seems problematic because the inner HTML of the heading element `<h…>` might contain someting inappropriate for the link `<a>`. I tried `createTextNode()`, but it doesn't works correctly if the `<h…>` contains style tags (`<sub>`, `<strong>`, etc.). I also tried the `Range` object, but this idea is even worse. If anyone has any ideas, please tell me.
+
+Another issue is related to the browser's built-in text search function on the current page (with hidden text): depending on the specific browser, it either doesn't not work at all or works incorrectly.
 
 A Little Bonus
 --------------
