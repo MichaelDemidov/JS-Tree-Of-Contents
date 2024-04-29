@@ -52,6 +52,11 @@ The script solves this problem this way: an additional `onclick` event listener 
 
 I tried to make the JS code, CSS, and HTML minimally dependent on each other. Of course, the script uses some CSS class names, but, firstly, there are not many of them, and secondly, all these names are placed at the very beginning of the script file as string constants, so they are easy to rename. And the only CSS class that is absolutely necessary is the class `hidden`, because it controls the visibility of elements (I also didn't use tricks like setting the `display` property to `none` in the script itself — I just assigned the objects the CSS class `hidden`). All other classes are intended for visual design and can easily be redefined as desired.
 
+Known Issues / To Do
+--------------------
+
+The `TreeOfContents.#createTreeLink()` private method contains direct assignment to a link's `innerHTML` property. It seems problematic because the inner HTML of the heading element `<h…>` might contain someting inappropriate for the link `<a>`. I tried `createTextNode()`, but it doesn't works correctly if the `<h…>` contains style tags (`<sub>`, `<strong>`, etc.). I also tried the `Range` object, but this idea is even worse. If anyone has any ideas, please tell me.
+
 A Little Bonus
 --------------
 
