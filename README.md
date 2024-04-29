@@ -29,8 +29,7 @@ How It Works?
 
 There is a `TreeOfContents` class that is instantiated in the document `onload` event handler. An element is passed to the class constructor contains text marked up using headings of different levels (from H1 to H6). The script uses them as “milestones” to divide the text into parts and simultaneously creates a tree of these headings. The tree is built from bulleted lists `<ul>` and collapsible HTML5 elements `<details>` and `<summary>` if needed. Each tree element contains a link to the corresponding part of the document, and all these parts are initially made invisible. The tree constructed in this way is placed either in an element passed to the `TreeOfContents` class constructor as the second parameter, or in an element `<div class="tree-of-contents">` that the class creates itself if the second constructor parameter is not spacified. Clicking on a link in the tree makes the document part visible (custom `<a>` tag attributes are used for this).
 
-Building a Hierarchy
-====================
+### Building a Hierarchy
 
 The main difficulty is that the HTML document actually does not have any hierarchy connecting the headings of different levels with each other and with the content of the corresponding sections. The heading is not connected in any way to the text that follows it. Therefore, the script considers the section content to be everything placed between the heading and the following heading or the end of the text. If the next heading has a lower level than the current one, then the script considers that the next heading is nested inside the current section.
 
@@ -39,20 +38,17 @@ To divide the document into parts, the script uses the `Range` class, which has 
 > [!CAUTION]
 > If the structure of the document is broken, that is, there are unclosed tags or headings are nested within other elements, the script will most likely produce strange results or not work at all.
 
-Levels Nesting
-==============
+### Levels Nesting
 
 In any tree branch, the depth of a node's nesting is determined by the header level. The script is “smart” enough to handle situations where some header level does not exist, such as a document containing only H1, H2 and H4 headings: it treats the H4 heading as a third level rather than a fourth. Additionally, if one of the branch of the tree has a gap in the header numbering, the script inserts a “fake” tree node to maintain equal nesting levels compared to other branches.
 
-Internal Links (Anchors)
-========================
+### Internal Links (Anchors)
 
 The tree structure gives rise to two problems at once regarding *internal links.* Firstly, if there is a link from one part of the document to another (`<a href="#element_id">`), then such a link must be processed in a more complex way than usual. Conventional processing simply involves scrolling the document to the element with given id, but in the case of a tree, you first need to find which section this element falls into, expand the tree branch that refers to this section, show the corresponding piece of the document, and then scroll the document to the element. Secondly, if the URL contains the name of the element, then when loading the page the script needs to perform the same actions.
 
 The script solves this problem this way: an additional click event listener is attached to the link containing the hash symbol (#), which performs all the necessary actions, see the static `TreeOfContents.processHashLink()` method. This method must also recognize whether the link consists of just one word pecedud by the hash character (e.g. `<a href="#element_id">`) or contains the full page address plus the element name (e.g. `<a href="http://mysite.com/page.html#element_id">`). The same method is called in the class constructor if the URL contains a hash character.
 
-Final Remarks
-=============
+### Final Remarks
 
 I tried to make the JS code, CSS, and HTML minimally dependent on each other. Of course, the script uses some CSS class names, but, firstly, there are not many of them, and secondly, all these names are placed at the very beginning of the script file as string constants, so they are easy to rename. And the only CSS class that is absolutely necessary is the class `hidden`, because it controls the visibility of elements (I also didn't use tricks like setting the `display` property to `none` in the script itself — I just assigned the objects the CSS class `hidden`). All other classes are intended for visual design and can easily be redefined as desired.
 
