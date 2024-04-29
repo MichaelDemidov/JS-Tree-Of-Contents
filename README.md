@@ -16,7 +16,7 @@ The easiest way to illustrate this is with two pictures: without the script and 
 
 ![The same document with the table of contents](images/toc.jpg)
 
-> [!NOTE]
+> [!IMPORTANT]
 > The source code is provided *as is,* since I mainly did this project for myself, but I will be glad if someone finds it useful. Also, I physically could not test the script on a large number of browsers and especially mobile devices. Thus, I won’t mind if someone finds errors or wants to help the project in a different way.
 
 Requirements
