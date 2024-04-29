@@ -24,7 +24,10 @@ Requirements
 
 HTML 5, ECMAScript 6, and CSS 3.0. I also used scalable SVG icons that I drew myself for the tree elements (these are included in the CSS in Base64 encoded form and placed in the `images` folder as SVG images at the same time).
 
-I think it's possible to rewrite the code to reduce the requirements if someone needs it, but I haven't done it myself and haven't tested it on very old browsers like Internet Explorer.
+> [!NOTE]
+> I used the vector graphic editor Inkscape and saved the files in the “Optimized SVG” format so they take up less space.
+
+I think it’s possible to rewrite the code to reduce the requirements if someone needs it, but I haven’t done it myself and haven’t tested it on very old browsers like Internet Explorer.
 
 How It Works?
 -------------
@@ -42,7 +45,7 @@ To divide the document into parts, the script uses the `Range` class, which has 
 
 ### Levels Nesting
 
-In any tree branch, the depth of a node's nesting is determined by the header level. The script is “smart” enough to handle situations where some header level does not exist, such as a document containing only H1, H2 and H4 headings: it treats the H4 heading as a third level rather than a fourth. Additionally, if one of the branch of the tree has a gap in the header numbering, the script inserts a “fake” tree node to maintain equal nesting levels compared to other branches.
+In any tree branch, the depth of a node’s nesting is determined by the header level. The script is “smart” enough to handle situations where some header level does not exist, such as a document containing only H1, H2 and H4 headings: it treats the H4 heading as a third level rather than a fourth. Additionally, if one of the branch of the tree has a gap in the header numbering, the script inserts a “fake” tree node to maintain equal nesting levels compared to other branches.
 
 ### Internal Links (Anchors) And URLs Containing Direct Links to Parts of the Document
 
@@ -52,16 +55,16 @@ The script solves this problem this way: an additional `onclick` event listener 
 
 ### Final Remarks
 
-I tried to make the JS code, CSS, and HTML minimally dependent on each other. Of course, the script uses some CSS class names, but, firstly, there are not many of them, and secondly, all these names are placed at the very beginning of the script file as string constants, so they are easy to rename. And the only CSS class that is absolutely necessary is the class `hidden`, because it controls the visibility of elements (I also didn't use tricks like setting the `display` property to `none` in the script itself — I just assigned the objects the CSS class `hidden`). All other classes are intended for visual design and can easily be redefined as desired.
+I tried to make the JS code, CSS, and HTML minimally dependent on each other. Of course, the script uses some CSS class names, but, firstly, there are not many of them, and secondly, all these names are placed at the very beginning of the script file as string constants, so they are easy to rename. And the only CSS class that is absolutely necessary is the class `hidden`, because it controls the visibility of elements (I also didn’t use tricks like setting the `display` property to `none` in the script itself — I just assigned the objects the CSS class `hidden`). All other classes are intended for visual design and can easily be redefined as desired.
 
 Known Issues / To Do
 --------------------
 
-The `TreeOfContents.#createTreeLink()` private method contains direct assignment to a link's `innerHTML` property. It seems problematic because the inner HTML of the heading element `<h…>` might contain someting inappropriate for the link `<a>`. I tried `createTextNode()`, but it doesn't works correctly if the `<h…>` contains style tags (`<sub>`, `<strong>`, etc.). I also tried the `Range` object, but this idea is even worse. If anyone has any ideas, please tell me.
+The `TreeOfContents.#createTreeLink()` private method contains direct assignment to a link’s `innerHTML` property. It seems problematic because the inner HTML of the heading element `<h…>` might contain someting inappropriate for the link `<a>`. I tried `createTextNode()`, but it doesn’t works correctly if the `<h…>` contains style tags (`<sub>`, `<strong>`, etc.). I also tried the `Range` object, but this idea is even worse. If anyone has any ideas, please tell me.
 
-Another issue is related to the browser's built-in text search function on the current page (with hidden text): depending on the specific browser, it either doesn't not work at all or works incorrectly. It might make sense to implement own search function on hidden elements.
+Another issue is related to the browser’s built-in text search function on the current page (with hidden text): depending on the specific browser, it either doesn’t not work at all or works incorrectly. It might make sense to implement own search function on hidden elements.
 
-And one more idea for the (possible) future: add the ability to display the entire contents of a document at once, that is, temporarily or permanently disable hiding of all sections except the current one. It's not very difficult to implement.
+And one more idea for the (possible) future: add the ability to display the entire contents of a document at once, that is, temporarily or permanently disable hiding of all sections except the current one. It’s not very difficult to implement.
 
 A Little Bonus
 --------------
