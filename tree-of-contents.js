@@ -39,10 +39,11 @@ class TreeOfContents {
    * Creates an instance of TreeOfContents
    * 
    * @param {Element} elementContent - Element containing content for which a table of contents is generated
-   * @param {Element} elementTreeOfContents - Parent element for the table of contents. If not specified, it will be created
+   * @param {Array.<string>} [headingTagList] - List of heading tag names to use
+   * @param {Element} [elementTreeOfContents] - Parent element for the table of contents. If not specified, it will be created
    * @memberof TreeOfContents
    */
-  constructor(elementContent, elementTreeOfContents) {
+  constructor(elementContent, headingTagList, elementTreeOfContents) {
     this.#elementContent = elementContent;
     if (elementTreeOfContents) {
       this.#elementTreeOfContents = elementTreeOfContents;
@@ -53,7 +54,11 @@ class TreeOfContents {
       this.#elementTreeOfContents.id = classTOC + "-" + elementContent.id;
     }
     this.#elementTreeOfContents.classList.add(classTOC);
-    this.#initTree();
+    if (headingTagList) {
+      this.#initTree(headingTagList);
+    } else {
+      this.#initTree(["h1", "h2", "h3", "h4", "h5", "h6"]);
+    }
   }
 
   /**
@@ -111,7 +116,7 @@ class TreeOfContents {
    * @memberof TreeOfContents
    * @static
    */
-   static processHashLink(href, forceScroll = false) {
+  static processHashLink(href, forceScroll = false) {
     let targetElement = document.getElementById(href.split("#")[1]);
     if (targetElement) {
       let divToShow = targetElement.closest("." + classTOCBlock);
@@ -131,14 +136,15 @@ class TreeOfContents {
   /**
    * Generates a tree of contents
    *
+   * @param {Array.<string>} headingTagList - List of heading elements to use
    * @memberof TreeOfContents
    * @private
    */
-  #initTree() {
+  #initTree(headingTagList) {
     if (this.#elementContent) {
-      let headerList = this.#elementContent.querySelectorAll("h1,h2,h3,h4,h5,h6");
+      let headingList = this.#elementContent.querySelectorAll(headingTagList.toString());
 
-      if (headerList) {
+      if (headingList) {
         this.#updateLinks(window.location.href.split("#")[0]);
 
         /* variables */
@@ -149,9 +155,9 @@ class TreeOfContents {
         let ulCurrentTreeNode;
         let liCurrentTreeNode;
         let rangeCurrent;
-        let headerLevelList = this.#sortedNodeNameList(headerList);
+        let headerLevelList = this.#sortedNodeNameList(headingList, headingTagList);
 
-        headerList.forEach(headerCurrent => {
+        headingList.forEach(headerCurrent => {
           if (blockId !== "" && rangeCurrent) {
             rangeCurrent.setEndBefore(headerCurrent);
             this.#wrapRangeWithDiv(rangeCurrent, blockId).classList.add(classTOCBlock);
@@ -161,7 +167,8 @@ class TreeOfContents {
           rangeCurrent = new Range();
           rangeCurrent.setStartBefore(headerCurrent, 0);
 
-          for (currentLevel = headerLevelList.indexOf(headerCurrent.nodeName); currentLevel > prevLevel; prevLevel++) {
+          for (currentLevel = headerLevelList.indexOf(headerCurrent.nodeName.toUpperCase()); currentLevel > prevLevel;
+            prevLevel++) {
             let tmp = document.createElement("ul");
             if (prevLevel === -1 || typeof liCurrentTreeNode === "undefined") {
               ulRootTreeNode = tmp;
@@ -234,9 +241,10 @@ class TreeOfContents {
    */
   #createTreeLink(parent, innerHTML, id) {
     let link = parent.appendChild(document.createElement("a"));
-    /* TODO: direct assignment to innerHTML seems problematic because the inner HTML of the <h> element might
+    /* TODO: direct assignment to innerHTML seems problematic because the inner HTML of the heading element might
        contain someting inappropriate for the <a>. I tried createTextNode(), but it doesn't works correctly if the
-       <h> contains style tags (<sub>, <strong>, etc.). I also tried the Range object, but this idea is even worse */
+       heading's innerHTML contains style tags (<sub>, <strong>, etc.). I also tried the Range object, but this idea is
+       even worse */
     link.innerHTML = innerHTML;
     link.id = prefixLink + id;
     link.setAttribute(attrLinkSection, id);
@@ -262,18 +270,21 @@ class TreeOfContents {
   }
 
   /**
-   * Auxiliary function: given a list of elements, returns an alphabetically sorted list of their unique node names
+   * Auxiliary function: given a list of elements, returns a list of their unique node names, sorted according to
+   * tagOrderList
    *
    * @param {Array.<Element>} elementList - List of elements to process
-   * @return {Array.string} Alphabetically sorted list of node names
+   * @param {Array.<string>} tagOrderList - List of tag names to define the order
+   * @return {Array.<string>} Sorted list of node names
    * @memberof TreeOfContents
    * @private
    */
-  #sortedNodeNameList(elementList) {
-    let elementSet = new Set();
+  #sortedNodeNameList(elementList, tagOrderList) {
+    let tagOrderListU = tagOrderList.map((str) => str.toUpperCase());
+    let elementSetU = new Set();
     elementList.forEach(child => {
-      elementSet.add(child.nodeName);
+      elementSetU.add(child.nodeName.toUpperCase());
     });
-    return Array.from(elementSet).sort();
+    return Array.from(elementSetU).sort((a, b) => tagOrderListU.indexOf(a) - tagOrderListU.indexOf(b));
   }
 }

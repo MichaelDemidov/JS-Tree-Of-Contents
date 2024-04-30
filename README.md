@@ -32,7 +32,22 @@ I think it’s possible to rewrite the code to reduce the requirements if someon
 How It Works?
 -------------
 
-There is a `TreeOfContents` class that is instantiated in the document `onload` event handler. An element is passed to the class constructor contains text marked up using headings of different levels (from H1 to H6). The script uses them as “milestones” to divide the text into parts and simultaneously creates a tree of these headings. The tree is built from bulleted lists `<ul>` and collapsible HTML5 elements `<details>` and `<summary>` if needed. Each tree element contains a link to the corresponding part of the document, and all these parts are initially made invisible. The tree constructed in this way is placed either in an element passed to the `TreeOfContents` class constructor as the second parameter, or in an element `<div class="tree-of-contents">` that the class creates itself if the second constructor parameter is not spacified. Clicking on a link in the tree makes the document part visible (custom `<a>` tag attributes are used for this).
+### Class Constructor
+
+There is a `TreeOfContents` class that is instantiated in the document `onload` event handler:
+
+```JavaScript
+let elementContent = document.getElementById('content');
+let headingTagList = ['h1', 'h2', 'h3'];
+let elementTreeOfContents = document.getElementById('table-of-contents');
+new TreeOfContents(elementContent, headingTagList, elementTreeOfContents);
+```
+
+The **first and only required parameter** passed to the class constructor is an element that contains text marked up with *headings.* The *heading* here is any tag, usually it is `<h…>`.
+
+The **second optional parameter** is an array containing all of these heading tags in nesting order. If an array is not specified the default list of HTML heading tags from `h1` to `h6` is used. The script uses these tags as “milestones” to divide the text into parts and simultaneously creates a tree of these headings. The tree is built from bulleted lists `<ul>` and collapsible HTML5 elements `<details>` and `<summary>` if needed. Each tree element contains a link to the corresponding part of the document, and all these parts are initially made invisible.
+
+The tree constructed in this way is placed either in an element passed to the `TreeOfContents` class constructor as a last **third (also optional) parameter,** or in a `<div class="tree-of-contents">` element that the class creates itself if the last constructor parameter is not spacified. Clicking on a link in the tree makes the document part visible (custom `<a>` tag attributes are used for this).
 
 ### Building a Hierarchy
 
@@ -45,7 +60,9 @@ To divide the document into parts, the script uses the `Range` class, which has 
 
 ### Levels Nesting
 
-In any tree branch, the depth of a node’s nesting is determined by the header level. The script is “smart” enough to handle situations where some header level does not exist, such as a document containing only H1, H2 and H4 headings: it treats the H4 heading as a third level rather than a fourth. Additionally, if one of the branch of the tree has a gap in the header numbering, the script inserts a “fake” tree node to maintain equal nesting levels compared to other branches.
+In any tree branch, the depth of a node’s nesting is determined by the heading level. [As stated above](#class-constructor), the order of levels is specified by the second parameter of the class constructor. By default, the standard HTML heading scheme is used, where `<h1>` is the top level and `<h6>` is the bottom level, but you can use other tags or change the nesting order of the headings, for example, making the `<h3>` higher than `<h2>`.
+
+The script is “smart” enough to handle situations where some heading levels in the list don’t exist in the content, such as a document containing only `<h1>`, `<h2>` and `<h4>` headings: it treats the `<h4>` heading as a third level rather than a fourth. Additionally, if there is a gap in the heading numbering of one of the branches (that is not present in the other branches), the script inserts a “fake” tree node to maintain equal nesting levels compared to other branches.
 
 ### Internal Links (Anchors) And URLs Containing Direct Links to Parts of the Document
 
@@ -60,7 +77,7 @@ I tried to make the JS code, CSS, and HTML minimally dependent on each other. Of
 Known Issues / To Do
 --------------------
 
-The `TreeOfContents.#createTreeLink()` private method contains direct assignment to a link’s `innerHTML` property. It seems problematic because the inner HTML of the heading element `<h…>` might contain someting inappropriate for the link `<a>`. I tried `createTextNode()`, but it doesn’t works correctly if the `<h…>` contains style tags (`<sub>`, `<strong>`, etc.). I also tried the `Range` object, but this idea is even worse. If anyone has any ideas, please tell me.
+The `TreeOfContents.#createTreeLink()` private method contains direct assignment to a link’s `innerHTML` property. It seems problematic because the inner HTML of the heading element might contain someting inappropriate for the link `<a>`. I tried `createTextNode()`, but it doesn’t works correctly if the heading’s `innerHTML` property contains style tags (`<sub>`, `<strong>`, etc.). I also tried the `Range` object, but this idea is even worse. If anyone has any ideas, please tell me.
 
 Another issue is related to the browser’s built-in text search function on the current page (with hidden text): depending on the specific browser, it either doesn’t not work at all or works incorrectly. It might make sense to implement own search function on hidden elements.
 
