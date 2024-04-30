@@ -37,15 +37,15 @@ How It Works?
 There is a `TreeOfContents` class that is instantiated in the document `onload` event handler:
 
 ```JavaScript
-let elementContent = document.getElementById('content');
-let headingTagList = ['h1', 'h2', 'h3'];
-let elementTreeOfContents = document.getElementById('table-of-contents');
+let elementContent = document.getElementById("content");
+let headingTagList = ["h1", "h2", "h3"];
+let elementTreeOfContents = document.getElementById("table-of-contents");
 new TreeOfContents(elementContent, headingTagList, elementTreeOfContents);
 ```
 
-The **first and only required parameter** passed to the class constructor is an element that contains text marked up with *headings.* The *heading* here is any tag, usually it is `<h…>`.
+The **first and only required parameter** passed to the class constructor (here it is the `elementContent`) is an element that contains text marked up with *headings.* The *heading* here is any tag, usually it is `<h…>`.
 
-The **second optional parameter** is an array containing all of these heading tags in nesting order. If an array is not specified the default list of HTML heading tags from `h1` to `h6` is used. The script uses these tags as “milestones” to divide the text into parts and simultaneously creates a tree of these headings. The tree is built from bulleted lists `<ul>` and collapsible HTML5 elements `<details>` and `<summary>` if needed. Each tree element contains a link to the corresponding part of the document, and all these parts are initially made invisible.
+The **second optional parameter** is an array containing all of these heading tags in nesting order. If an array is not specified the default list of HTML heading tags from `<h1>` to `<h6>` is used. The script uses these tags as “milestones” to divide the text into parts and simultaneously creates a tree of these headings. The tree is built from bulleted lists `<ul>` and collapsible HTML5 elements `<details>` and `<summary>` if needed. Each tree element contains a link to the corresponding part of the document, and all these parts are initially made invisible.
 
 The tree constructed in this way is placed either in an element passed to the `TreeOfContents` class constructor as a last **third (also optional) parameter,** or in a `<div class="tree-of-contents">` element that the class creates itself if the last constructor parameter is not spacified. Clicking on a link in the tree makes the document part visible (custom `<a>` tag attributes are used for this).
 
