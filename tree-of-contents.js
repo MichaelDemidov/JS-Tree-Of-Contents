@@ -22,7 +22,7 @@ const attrLinkTree = "tree-element";
 /** @type {string} The name of a custom attribute that contains the id of the section being referenced by the generated link */
 const attrLinkSection = "section";
 
-/** @type {integer} Global variable to ensure continuous numbering of all links in the document */
+/** @type {integer} Global variable to ensure continuous numbering of ALL links (regardless of the object that created them) in the document */
 let blockNumber = 0;
 
 /**

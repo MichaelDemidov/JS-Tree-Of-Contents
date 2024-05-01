@@ -81,7 +81,9 @@ The `TreeOfContents.#createTreeLink()` private method contains direct assignment
 
 Another issue is related to the browser’s built-in text search function on the current page (with hidden text): depending on the specific browser, it either doesn’t not work at all or works incorrectly. It might make sense to implement own search function on hidden elements.
 
-And one more idea for the (possible) future: add the ability to display the entire contents of a document at once, that is, temporarily or permanently disable hiding of all sections except the current one. It’s not very difficult to implement.
+And one more idea for the (possible) future: to add the ability to display the entire contents of a document at once, that is, temporarily or permanently disable hiding of all sections except the current one. It’s not very difficult to implement.
+
+**To do:** How to handle the situation if the content for building the table of contents is not static, but is generated asynchronously by another script?
 
 A Little Bonus
 --------------
