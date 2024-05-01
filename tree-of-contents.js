@@ -170,7 +170,7 @@ class TreeOfContents {
           for (currentLevel = headerLevelList.indexOf(headerCurrent.nodeName.toUpperCase()); currentLevel > prevLevel;
             prevLevel++) {
             let tmp = document.createElement("ul");
-            if (prevLevel === -1 || typeof liCurrentTreeNode === "undefined") {
+            if (prevLevel === -1 || !liCurrentTreeNode) {
               ulRootTreeNode = tmp;
             } else {
               let details = liCurrentTreeNode.appendChild(document.createElement("details"));
