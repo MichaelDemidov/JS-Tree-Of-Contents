@@ -22,10 +22,7 @@ The easiest way to illustrate this is with two pictures: without the script and 
 Requirements
 ------------
 
-HTML 5, ECMAScript 6, and CSS 3.0. I also used scalable SVG icons that I drew myself for the tree elements (these are included in the CSS in Base64 encoded form and placed in the `images` folder as SVG images at the same time).
-
-> [!NOTE]
-> I used the vector graphic editor Inkscape and saved the files in the “Optimized SVG” format so they take up less space.
+HTML 5, ECMAScript 6, and CSS 3.0.
 
 I think it’s possible to rewrite the code to reduce the requirements if someone needs it, but I haven’t done it myself and haven’t tested it on very old browsers like Internet Explorer.
 
@@ -69,6 +66,20 @@ The script is “smart” enough to handle situations where some heading levels 
 The tree structure gives rise to two problems at once regarding *internal links.* Firstly, if there is a link from one part of the document to another (`<a href="#element_id">`, `<a href="page.html#element_id">`, etc.), then such a link must be processed in a more complex way than usual. By default, the browser simply scrolls the document to the element with the given id, but in the case of a tree, you first need to find which section this element falls into, expand the tree branch that refers that section, show the corresponding fragment of the document, and finally allow the browser to scroll the document to the element. Secondly, if the URL contains the hash character plus the name of the element, then when loading the page the script needs to perform the same actions.
 
 The script solves this problem this way: an additional `onclick` event listener is attached to any link with a `href` attribute that consists of either a single word peceded by a hash character (for example, `<a href="#element_id">`) or contains the URL of the current page plus a hash charater and the element id (e.g. `<a href="http://mysite.com/page.html#element_id">`). The event listener performs all the necessary actions, see the static `TreeOfContents.processHashLink()` method. And the same method is called in the class constructor if the page URL contains a hash character.
+
+### Vector vs PNG Icons
+
+There are two versions of the CSS: for the first (`toc-vector-icons`) I used scalable SVG icons that I drew myself for the tree elements (these are included in the CSS in Base64 encoded form and placed in the `images` folder as SVG images at the same time).
+
+> [!NOTE]
+> I used the vector graphic editor Inkscape and saved the files in the “Optimized SVG” format so they take up less space.
+
+For the second CSS (`toc-png-icons`) I used the same icons, but converted to PNG format (see the `images` subfolder). For small icons, this format looks better. Vector icons, on the other hand, look good on high screen resolutions.
+
+To view a document with vector icons, simply comment out the line `<link rel="stylesheet" href="toc-png-icons.css" />` in the file `index.html` and uncomment the line `<link rel="stylesheet" href="toc-vector-icons.css" />` (or vice versa to return PNG icons).
+
+> [!IMPORTANT]
+> The differences are not only in the icon format. Firstly, the squared plus and minus symbols for displaying a closed and open folder in vector icons are made part of the pictures themselves, while in PNG icons they are saved as separate icons. Secondly, I inserted the vector icons directly into the CSS file in encoded form, and saved the raster icons as separate files. This was done more as an experiment than out of necessity, but the second way (when the icons are made in all senses as separate files) allows, for example, in the future to implement an option when individual tree nodes can have non-standard icons specified using the CSS.
 
 ### Final Remarks
 
