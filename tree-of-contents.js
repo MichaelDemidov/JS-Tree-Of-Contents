@@ -16,6 +16,9 @@ const classVisited = "visited";
 /** @type {string} Generated link id prefix */
 const prefixLink = "link-";
 
+/** @type {string} Icon class prefix */
+const prefixIcon = "icon-";
+
 /** @type {string} The name of a custom attribute that contains the id of the tree containing the generated link */
 const attrLinkTree = "tree-element";
 
@@ -190,6 +193,7 @@ class TreeOfContents {
             prevLevel--;
           }
           liCurrentTreeNode = ulCurrentTreeNode.appendChild(document.createElement("li"));
+          this.#updateIcon(headerCurrent, liCurrentTreeNode);
           this.#createTreeLink(liCurrentTreeNode, headerCurrent.innerHTML, blockId)
         });
 
@@ -228,6 +232,22 @@ class TreeOfContents {
         }
       });
     }
+  }
+
+  /**
+   * Updates a tree node icon
+   *
+   * @param {Element} heading - Heading which class is used
+   * @param {Element} li - Tree node (<li>)
+   * @memberof TreeOfContents
+   * @private
+   */
+  #updateIcon(heading, li) {
+    heading.classList.forEach(headerClass => {
+      if(headerClass.startsWith(prefixIcon)) {
+        li.classList.add(headerClass);
+      }
+    });
   }
 
   /**

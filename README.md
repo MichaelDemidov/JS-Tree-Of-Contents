@@ -72,7 +72,7 @@ The script solves this problem this way: an additional `onclick` event listener 
 There are two versions of the CSS: for the first (`toc-vector-icons`) I used scalable SVG icons that I drew myself for the tree elements (these are included in the CSS in Base64 encoded form and placed in the `images` folder as SVG images at the same time).
 
 > [!NOTE]
-> I used the vector graphic editor Inkscape and saved the files in the “Optimized SVG” format so they take up less space.
+> I used the vector graphic editor Inkscape and saved the files in the “Optimized SVG” format so they take up less space, and then edited the XML manually to remove redundant comments, empty lines, etc.
 
 For the second CSS (`toc-png-icons`) I used the same icons, but converted to PNG format (see the `images` subfolder). For small icons, this format looks better. Vector icons, on the other hand, look good on high screen resolutions.
 
@@ -80,11 +80,14 @@ To view a document with vector icons, simply comment out the line `<link rel="st
 
 The differences are not only in the icon format. Firstly, the squared plus and minus symbols for displaying a closed and open folder in vector icons are made part of the pictures themselves, while in PNG icons they are saved as separate files. Secondly, I inserted the vector icons directly into the CSS file in base64 encoded form, and saved the PNG icons as separate files.
 
-This was done more as an experiment than out of necessity, but the second way (when the icons are made in all senses as separate files) allows, for example, in the future to implement an option when individual tree nodes can have non-standard icons specified using the CSS classes.
-
+This was done more as an experiment than out of necessity, but the second way (when the icons are made in all senses as separate files) allows to implement an option when individual tree nodes can have non-standard icons specified using the CSS classes, see [the next section](individual-node-icons).
 
 > [!IMPORTANT]
 > The raster format also has a disadvantage: when assigning an icon to a list item, if the image doesn’t fit the size of item marker, it is cropped, whereas a vector image is scaled.
+
+### Individual Node Icons
+
+All tree node icons are the same (either “opened / closed folder” or “document”), but sometimes we need to change one or more of them. To do this, I implemented the following feature: if a heading has a class with a name starting with “icon-” (see the `prefixIcon` constant), that same class is assigned to the tree node (the `<li>` element) that contains a link to this heading. This allows us to assign unique icons to some sections via CSS, for example see _Tallentyre_ marked with a warning sign.
 
 ### Final Remarks
 
