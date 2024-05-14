@@ -80,7 +80,7 @@ To view a document with vector icons, simply comment out the line `<link rel="st
 
 The differences are not only in the icon format. Firstly, the squared plus and minus symbols for displaying a closed and open folder in vector icons are made part of the pictures themselves, while in PNG icons they are saved as separate files. Secondly, I inserted the vector icons directly into the CSS file in base64 encoded form, and saved the PNG icons as separate files.
 
-This was done more as an experiment than out of necessity, but the second way (when the icons are made in all senses as separate files) allows to implement an option when individual tree nodes can have non-standard icons specified using the CSS classes, see [the next section](individual-node-icons).
+This was done more as an experiment than out of necessity, but the second way (when the icons are made in all senses as separate files) allows to implement an option when individual tree nodes can have non-standard icons specified using the CSS classes, see [the next section](#individual-node-icons).
 
 > [!IMPORTANT]
 > The raster format also has a disadvantage: when assigning an icon to a list item, if the image doesn’t fit the size of item marker, it is cropped, whereas a vector image is scaled.
