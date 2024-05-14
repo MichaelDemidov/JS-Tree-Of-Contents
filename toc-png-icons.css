@@ -39,12 +39,16 @@ div.tree-of-contents {
     text-decoration: none;
     padding: 2px;
   }
+  ul li a.visited {
+    color: purple;
+  }
   ul li a.current {
     background-color: blue;
     color: white;
   }
   ul li a:hover {
-    text-decoration: underline;
+    padding: 1px;
+    border: 1px dotted black;
   }
   ul li:not(:has(details))::before {
     content: url('images/empty.png');
