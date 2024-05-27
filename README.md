@@ -71,7 +71,7 @@ The script solves this problem this way: an additional `onclick` event listener 
 
 The script rely on the [TreeView](https://github.com/MichaelDemidov/HTML-TreeView) submodule to stylize the tree. Please read [the TreeView readme file](https://github.com/MichaelDemidov/HTML-TreeView//blob/main/README.md) for more details on the visual aspects and the difference between raster and vector SVG icon sets.
 
-To view a document with vector SVG icons, simply comment out the line `<link rel="stylesheet" href="HTML-TreeView/toc-png-icons.css" />` in the file `index.html` and uncomment the line `<link rel="stylesheet" href="HTML-TreeView/toc-svg-icons.css" />` (or vice versa to return PNG icons).
+To view a document with PNG icons, simply uncomment the line `<link rel="stylesheet" href="HTML-TreeView/tree-png-icons.css" />` in the file `index.html` and comment out the line `<link rel="stylesheet" href="HTML-TreeView/tree-svg-icons.css" />` (or vice versa to return vector SVG icons).
 
 ### Individual Node Icons
 
