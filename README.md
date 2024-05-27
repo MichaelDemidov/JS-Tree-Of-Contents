@@ -1,5 +1,5 @@
-Tree of Contents (HTML + JavaScript + CSS)
-==========================================
+Tree of Contents (JavaScript)
+=============================
 
 What Is It?
 -----------
@@ -22,7 +22,7 @@ The easiest way to illustrate this is with two pictures: without the script and 
 Requirements
 ------------
 
-HTML 5, ECMAScript 6, and CSS 3.0.
+The script itself requires ECMAScript 6 and HTML 5. The project uses the [TreeView](https://github.com/MichaelDemidov/HTML-TreeView) submodule which also requires HTML 5 and CSS 3.0.
 
 I think it’s possible to rewrite the code to reduce the requirements if someone needs it, but I haven’t done it myself and haven’t tested it on very old browsers like Internet Explorer.
 
@@ -67,27 +67,15 @@ The tree structure gives rise to two problems at once regarding *internal links.
 
 The script solves this problem this way: an additional `onclick` event listener is attached to any link with a `href` attribute that consists of either a single word peceded by a hash character (for example, `<a href="#element_id">`) or contains the URL of the current page plus a hash charater and the element id (e.g. `<a href="http://mysite.com/page.html#element_id">`). The event listener performs all the necessary actions, see the static `TreeOfContents.processHashLink()` method. And the same method is called in the class constructor if the page URL contains a hash character.
 
-### Vector vs PNG Icons
+### Appearance
 
-There are two versions of the CSS: for the first (`toc-vector-icons`) I used scalable SVG icons that I drew myself for the tree elements (these are included in the CSS in Base64 encoded form and placed in the `images` folder as SVG images at the same time).
+The script rely on the [TreeView](https://github.com/MichaelDemidov/HTML-TreeView) submodule to stylize the tree. Please read [the TreeView readme file](https://github.com/MichaelDemidov/HTML-TreeView//blob/main/README.md) for more details on the visual aspects and the difference between raster and vector SVG icon sets.
 
-> [!NOTE]
-> I used the vector graphic editor Inkscape and saved the files in the “Optimized SVG” format so they take up less space, and then edited the XML manually to remove redundant comments, empty lines, etc.
-
-For the second CSS (`toc-png-icons`) I used the same icons, but converted to PNG format (see the `images` subfolder). For small icons, this format looks better. Vector icons, on the other hand, look good on high screen resolutions.
-
-To view a document with vector icons, simply comment out the line `<link rel="stylesheet" href="toc-png-icons.css" />` in the file `index.html` and uncomment the line `<link rel="stylesheet" href="toc-vector-icons.css" />` (or vice versa to return PNG icons).
-
-The differences are not only in the icon format. Firstly, the squared plus and minus symbols for displaying a closed and open folder in vector icons are made part of the pictures themselves, while in PNG icons they are saved as separate files. Secondly, I inserted the vector icons directly into the CSS file in base64 encoded form, and saved the PNG icons as separate files.
-
-This was done more as an experiment than out of necessity, but the second way (when the icons are made in all senses as separate files) allows to implement an option when individual tree nodes can have non-standard icons specified using the CSS classes, see [the next section](#individual-node-icons).
-
-> [!IMPORTANT]
-> The raster format also has a disadvantage: when assigning an icon to a list item, if the image doesn’t fit the size of item marker, it is cropped, whereas a vector image is scaled.
+To view a document with vector SVG icons, simply comment out the line `<link rel="stylesheet" href="HTML-TreeView/toc-png-icons.css" />` in the file `index.html` and uncomment the line `<link rel="stylesheet" href="HTML-TreeView/toc-svg-icons.css" />` (or vice versa to return PNG icons).
 
 ### Individual Node Icons
 
-All tree node icons are the same (either “opened / closed folder” or “document”), but sometimes we need to change one or more of them. To do this, I implemented the following feature: if a heading has a class with a name starting with “icon-” (see the `prefixIcon` constant), that same class is assigned to the tree node (the `<li>` element) that contains a link to this heading. This allows us to assign unique icons to some sections via CSS, for example see _Tallentyre_ marked with a warning sign.
+All tree node icons are the same (either opened / closed “folder” or “document”), but sometimes we need to change one or more of them. To do this, I implemented the following feature: if a heading has a class with a name starting with “icon-” (see the `prefixIcon` constant), that same class is assigned to the tree node (the `<li>` element) that contains a link to this heading. This allows us to assign unique icons to some sections via CSS, for example see _Tallentyre_ marked with a warning sign.
 
 ### Final Remarks
 
