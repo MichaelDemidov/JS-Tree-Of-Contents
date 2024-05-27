@@ -1,5 +1,5 @@
 /** @type {string} Both CSS class for the table of contents and prefix for its id */
-const classTOC = "tree-of-contents";
+const classTOC = "treeview";
 
 /** @type {string} Both the CSS class for the generated div, and the immutable ID part of all generated elements (used by TreeOfContents.processHashLink()) */
 const classTOCBlock = "toc-block";
